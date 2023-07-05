@@ -55,7 +55,11 @@ def move_emails(service, user_id, query, label_name):
         # Move each message to the target folder (label)
         for message in messages:
             msg_id = message['id']
-            move_request = service.users().messages().modify(userId=user_id, id=msg_id, body={'addLabelIds': [label_id], 'removeLabelIds': []}).execute()
+            move_request = service.users().messages().modify(
+                userId=user_id,
+                id=msg_id,
+                body={'addLabelIds': [label_id], 'removeLabelIds': ['INBOX']}
+            ).execute()
             print(f"Moved message: {msg_id}")
 
     except HttpError as error:
